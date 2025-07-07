@@ -1,0 +1,33 @@
+﻿@model List<OutletStatusPortal.Models.Users>
+@{
+    ViewData["Title"] = "UserList";
+}
+
+<h1>UserList</h1>
+
+
+<table class="table table-bordered table-striped ">
+    <thead>
+        <tr>
+
+        
+        <th>Id</th>
+        <th>Name</th>
+        <th>Mobile</th>
+
+        </tr>
+        
+    </thead>
+    <tbody>
+       
+            @foreach (var User in Model)
+            {
+                <tr>
+                <td>@User.StafId</td>
+                <td>@User.Name</td>
+                <td>@User.Phone</td>
+                </tr>
+            }
+       
+    </tbody>
+</table>
