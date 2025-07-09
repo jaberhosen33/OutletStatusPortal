@@ -42,7 +42,7 @@ namespace OutletStatusPortal.Models
         [Required]
         public string EPSLive { get; set; } // dropdown
 
-        public string? AssignPersons { get; set; }
+        public string? AssignPersons { get; set; } 
 
         [DataType(DataType.Date)]
         public DateTime UpdateDate { get; set; } = DateTime.Now;

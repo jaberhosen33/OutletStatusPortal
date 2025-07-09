@@ -1,0 +1,106 @@
+﻿@model OutletStatusPortal.Models.NewOutletInfo
+
+@{
+    ViewData["Title"] = "Edit Outlet";
+}
+
+<h2>Edit Outlet Info</h2>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Sl" />
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="OutletCode">Outlet Code</label>
+            <input asp-for="OutletCode" class="form-control" />
+            <span asp-validation-for="OutletCode" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="OutletName"></label>
+            <input asp-for="OutletName" class="form-control" />
+            <span asp-validation-for="OutletName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Location"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="OfficeITSetup"></label>
+            <select asp-for="OfficeITSetup" class="form-control" asp-items="@(new SelectList(ViewBag.OfficeITSetup))"></select>
+            <span asp-validation-for="OfficeITSetup" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="CouriarStatus"></label>
+            <select asp-for="CouriarStatus" class="form-control" asp-items="@(new SelectList(ViewBag.CouriarStatus))"></select>
+            <span asp-validation-for="CouriarStatus" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Vendor"></label>
+            <input asp-for="Vendor" class="form-control" />
+            <span asp-validation-for="Vendor" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="OutletITSetup"></label>
+            <select asp-for="OutletITSetup" class="form-control" asp-items="@(new SelectList(ViewBag.OutletITSetup))"></select>
+            <span asp-validation-for="OutletITSetup" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="LinkStatus"></label>
+            <select asp-for="LinkStatus" class="form-control" asp-items="@(new SelectList(ViewBag.LinkStatus))"></select>
+            <span asp-validation-for="LinkStatus" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="SAPID"></label>
+            <select asp-for="SAPID" class="form-control" asp-items="@(new SelectList(ViewBag.SAPID))"></select>
+            <span asp-validation-for="SAPID" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="MailID"></label>
+            <select asp-for="MailID" class="form-control" asp-items="@(new SelectList(ViewBag.MailID))"></select>
+            <span asp-validation-for="MailID" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="POSID"></label>
+            <select asp-for="POSID" class="form-control" asp-items="@(new SelectList(ViewBag.POSID))"></select>
+            <span asp-validation-for="POSID" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="EPSLive"></label>
+            <select asp-for="EPSLive" class="form-control" asp-items="@(new SelectList(ViewBag.EPSLive))"></select>
+            <span asp-validation-for="EPSLive" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="AssignPersons"></label>
+            <input asp-for="AssignPersons" class="form-control" />
+            <span asp-validation-for="AssignPersons" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="UpdateDate"></label>
+            <input asp-for="UpdateDate" type="date" class="form-control" />
+            <span asp-validation-for="UpdateDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Update</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,83 @@
+﻿@model OutletStatusPortal.Models.NewOutletInfo
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2 class="mb-4">Create New Outlet</h2>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="OutletCode">Outlet Code</label>
+            <input asp-for="OutletCode" class="form-control" />
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="OutletName"></label>
+            <input asp-for="OutletName" class="form-control" />
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="Location"></label>
+            <input asp-for="Location" class="form-control" />
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="OfficeITSetup"></label>
+            <select asp-for="OfficeITSetup" class="form-control" asp-items="@(new SelectList(ViewBag.OfficeITSetup))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="CouriarStatus"></label>
+            <select asp-for="CouriarStatus" class="form-control" asp-items="@(new SelectList(ViewBag.CouriarStatus))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="Vendor"></label>
+            <input asp-for="Vendor" class="form-control" />
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="OutletITSetup"></label>
+            <select asp-for="OutletITSetup" class="form-control" asp-items="@(new SelectList(ViewBag.OutletITSetup))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="LinkStatus"></label>
+            <select asp-for="LinkStatus" class="form-control" asp-items="@(new SelectList(ViewBag.LinkStatus))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="SAPID"></label>
+            <select asp-for="SAPID" class="form-control" asp-items="@(new SelectList(ViewBag.SAPID))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="MailID"></label>
+            <select asp-for="MailID" class="form-control" asp-items="@(new SelectList(ViewBag.MailID))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="POSID"></label>
+            <select asp-for="POSID" class="form-control" asp-items="@(new SelectList(ViewBag.POSID))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="EPSLive"></label>
+            <select asp-for="EPSLive" class="form-control" asp-items="@(new SelectList(ViewBag.EPSLive))"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label asp-for="AssignPersons"></label>
+            <input asp-for="AssignPersons" class="form-control" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

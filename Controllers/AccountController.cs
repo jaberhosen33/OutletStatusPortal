@@ -8,14 +8,14 @@ using OutletStatusPortal.Models;
 
 namespace OutletStatusPortal.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private readonly Outletdbcontext _context;
+        
 
-        public AccountController(Outletdbcontext context)
-        {
-            _context = context;
-        }
+       public AccountController(Outletdbcontext context)
+        : base(context)
+    {
+    }
         [Authorize(Roles = "Admin")]
         public IActionResult Register() => View();
 
@@ -35,10 +35,12 @@ namespace OutletStatusPortal.Controllers
 
             return RedirectToAction("Login");
         }
-
+        [AllowAnonymous]
         public IActionResult Login() => View();
 
+      
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string stafid, string password)
         {
             var user = _context.Users.FirstOrDefault(u => u.StafId == stafid && u.PassWord == password);
