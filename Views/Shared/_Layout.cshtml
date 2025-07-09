@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ShawpnoPingMonitor.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
 </head>
 <body>
     <header class=" ">
@@ -95,6 +98,70 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        @if (TempData["success"] != null)
+        {
+            <text>
+                        Swal.fire({
+                            toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: '@TempData["success"]',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                        });
+            </text>
+        }
+        else if (TempData["error"] != null)
+        {
+            <text>
+                        Swal.fire({
+                            toast: true,
+                        position: 'top-end',
+                        icon: 'error',
+                        title: '@TempData["error"]',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                        });
+            </text>
+        }
+        else if (TempData["info"] != null)
+        {
+            <text>
+                        Swal.fire({
+                            toast: true,
+                        position: 'top-end',
+                        icon: 'info',
+                        title: '@TempData["info"]',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                        });
+            </text>
+        }
+        else if (TempData["warning"] != null)
+        {
+            <text>
+                        Swal.fire({
+                            toast: true,
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: '@TempData["warning"]',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                        });
+            </text>
+        }
+            });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

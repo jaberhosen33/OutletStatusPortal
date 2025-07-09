@@ -78,9 +78,11 @@ namespace OutletStatusPortal.Controllers
                     else
                         throw;
                 }
+                //TempData["success"] = "Operation completed successfully!";
                 return RedirectToAction(nameof(Index));
             }
             LoadDropdowns();
+            
             return View(newOutletInfo);
         }
 
