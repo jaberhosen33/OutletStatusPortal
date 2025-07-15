@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OutletStatusPortal.Models;
 using System;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -34,5 +35,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Login}/{id?}");
-
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<Outletdbcontext>();
+    dbContext.Database.Migrate();        // Apply pending migrations
+    dbContext.SeedStockData();           // Call the seed method
+}
 app.Run();

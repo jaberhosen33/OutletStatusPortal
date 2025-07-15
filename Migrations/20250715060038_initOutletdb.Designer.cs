@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OutletStatusPortal.Models;
 
@@ -11,9 +12,10 @@ using OutletStatusPortal.Models;
 namespace OutletStatusPortal.Migrations
 {
     [DbContext(typeof(Outletdbcontext))]
-    partial class OutletdbcontextModelSnapshot : ModelSnapshot
+    [Migration("20250715060038_initOutletdb")]
+    partial class initOutletdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

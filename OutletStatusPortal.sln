@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutletStatusPortal", "OutletStatusPortal.csproj", "{3D8D09FD-A05D-484A-A2D7-E0A796C20582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "..\TestProject1\TestProject1.csproj", "{042C19D7-09B2-43FF-98C0-808DD1DF138E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3D8D09FD-A05D-484A-A2D7-E0A796C20582}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D8D09FD-A05D-484A-A2D7-E0A796C20582}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D8D09FD-A05D-484A-A2D7-E0A796C20582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042C19D7-09B2-43FF-98C0-808DD1DF138E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{042C19D7-09B2-43FF-98C0-808DD1DF138E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{042C19D7-09B2-43FF-98C0-808DD1DF138E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{042C19D7-09B2-43FF-98C0-808DD1DF138E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

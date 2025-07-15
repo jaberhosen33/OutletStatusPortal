@@ -74,8 +74,8 @@ namespace OutletStatusPortal.Controllers
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-            //TempData["success"] = "Profile updated successfully!";
-            TempData["error"] = "Failed to update profile!";
+            TempData["success"] = "Log in  successfully!";
+            //TempData["error"] = "Failed to update profile!";
             //TempData["info"] = "This is some info.";
             //TempData["warning"] = "This is a warning!";
 
