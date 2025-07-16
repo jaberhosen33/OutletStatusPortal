@@ -100,6 +100,10 @@ namespace OutletStatusPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OutletName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Pos")
                         .HasColumnType("int");
 
@@ -285,7 +289,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 15, 12, 0, 37, 882, DateTimeKind.Local).AddTicks(7873),
+                            Date = new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9634),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -294,7 +298,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 15, 12, 0, 37, 882, DateTimeKind.Local).AddTicks(7876),
+                            Date = new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9637),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",

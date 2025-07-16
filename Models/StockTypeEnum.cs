@@ -2,7 +2,7 @@
 {
     public enum StockTypeEnum
     {
-        StockForAll,
-        DirectStockForOutlet
+        StockForAll = 0,
+        DirectStockForOutlet = 1
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OutletStatusPortal.Migrations
 {
-    public partial class initOutletdb : Migration
+    public partial class OutletdbInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,6 +76,7 @@ namespace OutletStatusPortal.Migrations
                     Sl = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OutletCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OutletName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StockType = table.Column<int>(type: "int", nullable: false),
                     StockItemId = table.Column<int>(type: "int", nullable: false),
@@ -153,12 +154,12 @@ namespace OutletStatusPortal.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l53335", new DateTime(2025, 7, 15, 12, 0, 37, 882, DateTimeKind.Local).AddTicks(7873), "Jaber Hosen", "1234", "01700000001", "Admin" });
+                values: new object[] { "l53335", new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9634), "Jaber Hosen", "1234", "01700000001", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l54445", new DateTime(2025, 7, 15, 12, 0, 37, 882, DateTimeKind.Local).AddTicks(7876), "Sadia Akter", "jaber hosen", "01700000002", "User" });
+                values: new object[] { "l54445", new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9637), "Sadia Akter", "jaber hosen", "01700000002", "User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BeforeOutletSetUps_StockItemId",

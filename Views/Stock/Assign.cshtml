@@ -1,0 +1,44 @@
+﻿
+@model BeforeOutletSetUp
+@{
+    ViewBag.Title = "Assign Stock";
+    var stockItems = ViewBag.StockItems as List<StockItem>;
+}
+
+<h2>Assign Stock to Outlet</h2>
+
+<form asp-action="Assign" method="post">
+   
+    <div>
+        <label>Outlet Code</label>
+        <input asp-for="OutletCode" />
+    </div>
+    <div>
+        <label>OutletName</label>
+        <input asp-for="OutletName" />
+    </div>
+    <div>
+        <label>Location</label>
+        <input asp-for="Location" />
+    </div>
+    <div>
+        <label>Stock Item</label>
+        <select asp-for="StockItemId">
+            @foreach (var item in stockItems)
+            {
+                    <option value="@item.Id">@item.VendorName - @item.StockType</option>
+            }
+        </select>
+    </div>
+
+    <div><label>POS</label><input asp-for="Pos" /></div>
+    <div><label>OM</label><input asp-for="Om" /></div>
+    <div><label>Server</label><input asp-for="Server" /></div>
+    <div><label>Router</label><input asp-for="Router" /></div>
+    <div><label>Scanner</label><input asp-for="Scanner" /></div>
+    <div><label>ICMO</label><input asp-for="Icmo" /></div>
+
+    <button type="submit">Assign</button>
+</form>
+
+

@@ -94,7 +94,19 @@ namespace OutletStatusPortal.Models
                         Router = 10,
                         Scanner = 10,
                         Icmo = 5
-                    }
+                    },
+                     new StockItem
+                     {
+                         VendorName = "Vendor D",
+                         OutletName = "Outlet-102",
+                         StockType = StockTypeEnum.DirectStockForOutlet,
+                         Pos = 2,
+                         Om = 2,
+                         Server = 2,
+                         Router = 2,
+                         Scanner = 2,
+                         Icmo = 2
+                     }
                 );
 
                 SaveChanges();

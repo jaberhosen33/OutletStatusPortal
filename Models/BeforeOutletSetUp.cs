@@ -10,6 +10,7 @@ namespace OutletStatusPortal.Models
 
        
         public string OutletCode { get; set; }
+        public string OutletName { get; set; }
         public string Location { get; set; }
 
         [Required]

@@ -12,8 +12,8 @@ using OutletStatusPortal.Models;
 namespace OutletStatusPortal.Migrations
 {
     [DbContext(typeof(Outletdbcontext))]
-    [Migration("20250715060038_initOutletdb")]
-    partial class initOutletdb
+    [Migration("20250716075841_OutletdbInit")]
+    partial class OutletdbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -99,6 +99,10 @@ namespace OutletStatusPortal.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("OutletCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OutletName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -287,7 +291,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 15, 12, 0, 37, 882, DateTimeKind.Local).AddTicks(7873),
+                            Date = new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9634),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -296,7 +300,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 15, 12, 0, 37, 882, DateTimeKind.Local).AddTicks(7876),
+                            Date = new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9637),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",

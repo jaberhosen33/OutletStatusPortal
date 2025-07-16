@@ -1,0 +1,88 @@
+﻿@model OutletStatusPortal.Models.StockItem
+
+@{
+    ViewBag.Title = "Add or Update Stock";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="VendorName"></label>
+        <input asp-for="VendorName" class="form-control" />
+        <span asp-validation-for="VendorName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StockType"></label>
+        <select asp-for="StockType" class="form-control" id="StockType" onchange="toggleOutletName()">
+            <option value="0">Stock For All</option>
+            <option value="1">Direct Stock For Outlet</option>
+        </select>
+        <span asp-validation-for="StockType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group" id="outletField" style="display:none;">
+        <label asp-for="OutletName"></label>
+        <input asp-for="OutletName" class="form-control" id="OutletName" />
+        <span asp-validation-for="OutletName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Pos"></label>
+        <input asp-for="Pos" class="form-control" />
+        <span asp-validation-for="Pos" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Om"></label>
+        <input asp-for="Om" class="form-control" />
+        <span asp-validation-for="Om" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Server"></label>
+        <input asp-for="Server" class="form-control" />
+        <span asp-validation-for="Server" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Router"></label>
+        <input asp-for="Router" class="form-control" />
+        <span asp-validation-for="Router" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Scanner"></label>
+        <input asp-for="Scanner" class="form-control" />
+        <span asp-validation-for="Scanner" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Icmo"></label>
+        <input asp-for="Icmo" class="form-control" />
+        <span asp-validation-for="Icmo" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function toggleOutletName() {
+            const stockType = document.getElementById("StockType").value;
+            const outletDiv = document.getElementById("outletField");
+            const outletInput = document.getElementById("OutletName");
+
+            if (stockType === "1") {
+                outletDiv.style.display = "block";
+            } else {
+                outletDiv.style.display = "none";
+                outletInput.value = "";
+            }
+        }
+
+        window.onload = toggleOutletName;
+    </script>
+}
