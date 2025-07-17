@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OutletStatusPortal.Models.BeforeOutletSetUp>
+@{
+    ViewBag.Title = "Before Outlet Setup List";
+}
+
+<h2 class="mb-4">Before Outlet Setup List</h2>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Outlet Code</th>
+            <th>Outlet Name</th>
+            <th>Location</th>
+            <th>Stock Type</th>
+            <th>Stock Item ID</th>
+            <th>POS</th>
+            <th>OM</th>
+            <th>Server</th>
+            <th>Router</th>
+            <th>Scanner</th>
+            <th>ICMO</th>
+            <th>Operation Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OutletCode</td>
+                <td>@item.OutletName</td>
+                <td>@item.Location</td>
+                <td>@item.StockType</td>
+                <td>@item.StockItemId</td>
+                <td>@item.Pos</td>
+                <td>@item.Om</td>
+                <td>@item.Server</td>
+                <td>@item.Router</td>
+                <td>@item.Scanner</td>
+                <td>@item.Icmo</td>
+                <td>@item.OperationDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

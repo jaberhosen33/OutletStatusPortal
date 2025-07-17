@@ -21,12 +21,21 @@ namespace OutletStatusPortal.Controllers
         }
 
         // View all stock items
-        public async Task<IActionResult> Index()
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ViewStocks()
         {
-            var items = await _context.StockItems.ToListAsync();
-            return View(items);
+            var stockItems = await _context.StockItems.ToListAsync();
+            return View(stockItems);
         }
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> BeforeSeupView()
+        {
+            var setups = await _context.BeforeOutletSetUps
+                .Include(b => b.DeviceStatuses)
+                .ToListAsync();
 
+            return View(setups);
+        }
         // GET: Assign stock form
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Assign()
@@ -66,7 +75,7 @@ namespace OutletStatusPortal.Controllers
             {
                 StockItemId = stock.Id,
                 OperationType = OperationType.Assign,
-                OutletCode = model.OutletCode,
+                OutletCode = model.OutletName,
                 Pos = model.Pos,
                 Om = model.Om,
                 Server = model.Server,
@@ -78,10 +87,10 @@ namespace OutletStatusPortal.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(BeforeSeupView));
         }
 
-        //create Stock Item 
+ //create Stock Item 
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
@@ -175,7 +184,7 @@ namespace OutletStatusPortal.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ViewStocks));
         }
 
       

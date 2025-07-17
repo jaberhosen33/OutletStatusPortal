@@ -79,7 +79,7 @@ namespace OutletStatusPortal.Controllers
             //TempData["info"] = "This is some info.";
             //TempData["warning"] = "This is a warning!";
 
-            return RedirectToAction("UserList", "Account");
+            return RedirectToAction("ViewStocks", "Stock");
 
         }
 

@@ -21,7 +21,7 @@ namespace OutletStatusPortal.Models
         [Range(0, int.MaxValue)] public int Router { get; set; }
         [Range(0, int.MaxValue)] public int Scanner { get; set; }
         [Range(0, int.MaxValue)] public int Icmo { get; set; }
-
+        public DateTime OperationDate { get; set; } = DateTime.Now;
         public ICollection<StockTransaction>? Transactions { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

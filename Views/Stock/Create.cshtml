@@ -3,67 +3,82 @@
     ViewBag.Title = "Add or Update Stock";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="mb-4">@ViewBag.Title</h2>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="VendorName"></label>
-        <input asp-for="VendorName" class="form-control" />
-        <span asp-validation-for="VendorName" class="text-danger"></span>
+<form asp-action="Create" method="post" class="container">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="VendorName" class="form-label">Vendor Name</label>
+            <select asp-for="VendorName" class="form-select">
+                <option value="AR Computer">AR Computer</option>
+                <option value="NS Computer">NS Computer</option>
+                <option value="Binary Logic">Binary Logic</option>
+                <option value="Ali Technology">Ali Technology</option>
+                <option value="Dighi Solution">Dighi Solution</option>
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="StockType" class="form-label">Stock Type</label>
+            <select asp-for="StockType" class="form-select" id="StockType" onchange="toggleOutletName()">
+                <option value="0">Stock For All</option>
+                <option value="1">Direct Stock For Outlet</option>
+            </select>
+            <span asp-validation-for="StockType" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="StockType"></label>
-        <select asp-for="StockType" class="form-control" id="StockType" onchange="toggleOutletName()">
-            <option value="0">Stock For All</option>
-            <option value="1">Direct Stock For Outlet</option>
-        </select>
-        <span asp-validation-for="StockType" class="text-danger"></span>
+    <div class="row mb-3" id="outletField" style="display: none;">
+        <div class="col-md-6">
+            <label asp-for="OutletName" class="form-label">Outlet Name</label>
+            <input asp-for="OutletName" class="form-control" id="OutletName" />
+            <span asp-validation-for="OutletName" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group" id="outletField" style="display:none;">
-        <label asp-for="OutletName"></label>
-        <input asp-for="OutletName" class="form-control" id="OutletName" />
-        <span asp-validation-for="OutletName" class="text-danger"></span>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Pos" class="form-label">POS PC</label>
+            <input asp-for="Pos" class="form-control" />
+            <span asp-validation-for="Pos" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Om" class="form-label">OM PC</label>
+            <input asp-for="Om" class="form-control" />
+            <span asp-validation-for="Om" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Server" class="form-label">Server PC</label>
+            <input asp-for="Server" class="form-control" />
+            <span asp-validation-for="Server" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Pos"></label>
-        <input asp-for="Pos" class="form-control" />
-        <span asp-validation-for="Pos" class="text-danger"></span>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Router" class="form-label">Router</label>
+            <input asp-for="Router" class="form-control" />
+            <span asp-validation-for="Router" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Scanner" class="form-label">Scanner</label>
+            <input asp-for="Scanner" class="form-control" />
+            <span asp-validation-for="Scanner" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Icmo" class="form-label">ICMO PC</label>
+            <input asp-for="Icmo" class="form-control" />
+            <span asp-validation-for="Icmo" class="text-danger"></span>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Om"></label>
-        <input asp-for="Om" class="form-control" />
-        <span asp-validation-for="Om" class="text-danger"></span>
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">Save</button>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Server"></label>
-        <input asp-for="Server" class="form-control" />
-        <span asp-validation-for="Server" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Router"></label>
-        <input asp-for="Router" class="form-control" />
-        <span asp-validation-for="Router" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Scanner"></label>
-        <input asp-for="Scanner" class="form-control" />
-        <span asp-validation-for="Scanner" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Icmo"></label>
-        <input asp-for="Icmo" class="form-control" />
-        <span asp-validation-for="Icmo" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
 @section Scripts {
@@ -75,7 +90,7 @@
             const outletInput = document.getElementById("OutletName");
 
             if (stockType === "1") {
-                outletDiv.style.display = "block";
+                outletDiv.style.display = "flex";
             } else {
                 outletDiv.style.display = "none";
                 outletInput.value = "";

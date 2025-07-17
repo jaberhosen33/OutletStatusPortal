@@ -17,7 +17,7 @@ namespace OutletStatusPortal.Models
         public string MailId { get; set; }
         public string PosId { get; set; }
         public string EPSLive { get; set; }
-
+        public DateTime OperationDate { get; set; } = DateTime.Now;
         public string? AssignedPersons { get; set; }
     }
 

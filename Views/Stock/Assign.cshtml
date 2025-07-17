@@ -1,45 +1,70 @@
-﻿
-@model BeforeOutletSetUp
+﻿@model BeforeOutletSetUp
 @{
     ViewBag.Title = "Assign Stock";
     var stockItems = ViewBag.StockItems as List<StockItem>;
 }
 
-<h2>Assign Stock to Outlet</h2>
+<h2 class="mb-4">Assign Stock to Outlet</h2>
 
-<form asp-action="Assign" method="post">
-   
-    <div>
-        <label>Outlet Code</label>
-        <input asp-for="OutletCode" />
-    </div>
-    <div>
-        <label>OutletName</label>
-        <input asp-for="OutletName" />
-    </div>
-    <div>
-        <label>Location</label>
-        <input asp-for="Location" />
-    </div>
-    <div>
-        <label>Stock Item</label>
-        <select asp-for="StockItemId">
-            @foreach (var item in stockItems)
-            {
-                <option value="@item.Id">@item.VendorName - @item.StockType - @item.OutletName</option>
-                
-            }
-        </select>
+<form asp-action="Assign" method="post" class="container">
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="OutletCode" class="form-label">Outlet Code</label>
+            <input asp-for="OutletCode" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="OutletName" class="form-label">Outlet Name</label>
+            <input asp-for="OutletName" class="form-control" />
+        </div>
     </div>
 
-    <div><label>POS</label><input asp-for="Pos" /></div>
-    <div><label>OM</label><input asp-for="Om" /></div>
-    <div><label>Server</label><input asp-for="Server" /></div>
-    <div><label>Router</label><input asp-for="Router" /></div>
-    <div><label>Scanner</label><input asp-for="Scanner" /></div>
-    <div><label>ICMO</label><input asp-for="Icmo" /></div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Location" class="form-label">Location</label>
+            <input asp-for="Location" class="form-control" />
+        </div>
+        <div class="col-md-6">
+            <label asp-for="StockItemId" class="form-label">Stock Item</label>
+            <select asp-for="StockItemId" class="form-select">
+                @foreach (var item in stockItems)
+                {
+                    <option value="@item.Id">@item.VendorName - @item.StockType - @item.OutletName</option>
+                }
+            </select>
+        </div>
+    </div>
 
-    <button type="submit">Assign</button>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Pos" class="form-label">POS</label>
+            <input asp-for="Pos" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Om" class="form-label">OM</label>
+            <input asp-for="Om" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Server" class="form-label">Server</label>
+            <input asp-for="Server" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label asp-for="Router" class="form-label">Router</label>
+            <input asp-for="Router" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Scanner" class="form-label">Scanner</label>
+            <input asp-for="Scanner" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label asp-for="Icmo" class="form-label">ICMO</label>
+            <input asp-for="Icmo" class="form-control" />
+        </div>
+    </div>
+
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary">Assign</button>
+    </div>
 </form>
-
-

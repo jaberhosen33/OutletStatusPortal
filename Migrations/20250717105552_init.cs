@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OutletStatusPortal.Migrations
 {
-    public partial class OutletdbInit : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,11 +25,36 @@ namespace OutletStatusPortal.Migrations
                     MailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PosId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EPSLive = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OperationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AssignedPersons = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AfterOutletSetups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BeforeOutletSetUps",
+                columns: table => new
+                {
+                    Sl = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OutletCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OutletName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StockType = table.Column<int>(type: "int", nullable: false),
+                    StockItemId = table.Column<int>(type: "int", nullable: false),
+                    Pos = table.Column<int>(type: "int", nullable: false),
+                    Om = table.Column<int>(type: "int", nullable: false),
+                    Server = table.Column<int>(type: "int", nullable: false),
+                    Router = table.Column<int>(type: "int", nullable: false),
+                    Scanner = table.Column<int>(type: "int", nullable: false),
+                    Icmo = table.Column<int>(type: "int", nullable: false),
+                    OperationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BeforeOutletSetUps", x => x.Sl);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +71,8 @@ namespace OutletStatusPortal.Migrations
                     Server = table.Column<int>(type: "int", nullable: false),
                     Router = table.Column<int>(type: "int", nullable: false),
                     Scanner = table.Column<int>(type: "int", nullable: false),
-                    Icmo = table.Column<int>(type: "int", nullable: false)
+                    Icmo = table.Column<int>(type: "int", nullable: false),
+                    OperationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,31 +96,25 @@ namespace OutletStatusPortal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BeforeOutletSetUps",
+                name: "DeviceSetupStatuses",
                 columns: table => new
                 {
-                    Sl = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OutletCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OutletName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StockType = table.Column<int>(type: "int", nullable: false),
-                    StockItemId = table.Column<int>(type: "int", nullable: false),
-                    Pos = table.Column<int>(type: "int", nullable: false),
-                    Om = table.Column<int>(type: "int", nullable: false),
-                    Server = table.Column<int>(type: "int", nullable: false),
-                    Router = table.Column<int>(type: "int", nullable: false),
-                    Scanner = table.Column<int>(type: "int", nullable: false),
-                    Icmo = table.Column<int>(type: "int", nullable: false)
+                    Sl = table.Column<int>(type: "int", nullable: false),
+                    DeviceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    WorkStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WorkBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BeforeOutletSetUps", x => x.Sl);
+                    table.PrimaryKey("PK_DeviceSetupStatuses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BeforeOutletSetUps_StockItems_StockItemId",
-                        column: x => x.StockItemId,
-                        principalTable: "StockItems",
-                        principalColumn: "Id",
+                        name: "FK_DeviceSetupStatuses_BeforeOutletSetUps_Sl",
+                        column: x => x.Sl,
+                        principalTable: "BeforeOutletSetUps",
+                        principalColumn: "Sl",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -128,43 +148,15 @@ namespace OutletStatusPortal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "DeviceSetupStatuses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Sl = table.Column<int>(type: "int", nullable: false),
-                    DeviceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WorkStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WorkBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeviceSetupStatuses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeviceSetupStatuses_BeforeOutletSetUps_Sl",
-                        column: x => x.Sl,
-                        principalTable: "BeforeOutletSetUps",
-                        principalColumn: "Sl",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
+                values: new object[] { "l53335", new DateTime(2025, 7, 17, 16, 55, 51, 980, DateTimeKind.Local).AddTicks(5537), "Jaber Hosen", "1234", "01700000001", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l53335", new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9634), "Jaber Hosen", "1234", "01700000001", "Admin" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l54445", new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9637), "Sadia Akter", "jaber hosen", "01700000002", "User" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BeforeOutletSetUps_StockItemId",
-                table: "BeforeOutletSetUps",
-                column: "StockItemId");
+                values: new object[] { "l54445", new DateTime(2025, 7, 17, 16, 55, 51, 980, DateTimeKind.Local).AddTicks(5538), "Sadia Akter", "jaber hosen", "01700000002", "User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceSetupStatuses_Sl",

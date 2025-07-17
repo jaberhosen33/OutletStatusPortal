@@ -57,6 +57,9 @@ namespace OutletStatusPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("OperationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("OutletITSetup")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -96,8 +99,10 @@ namespace OutletStatusPortal.Migrations
                     b.Property<int>("Om")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("OperationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("OutletCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OutletName")
@@ -123,8 +128,6 @@ namespace OutletStatusPortal.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Sl");
-
-                    b.HasIndex("StockItemId");
 
                     b.ToTable("BeforeOutletSetUps");
                 });
@@ -173,6 +176,9 @@ namespace OutletStatusPortal.Migrations
 
                     b.Property<int>("Om")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("OperationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("OutletName")
                         .HasColumnType("nvarchar(max)");
@@ -289,7 +295,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9634),
+                            Date = new DateTime(2025, 7, 17, 16, 55, 51, 980, DateTimeKind.Local).AddTicks(5537),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -298,23 +304,12 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 16, 13, 58, 41, 85, DateTimeKind.Local).AddTicks(9637),
+                            Date = new DateTime(2025, 7, 17, 16, 55, 51, 980, DateTimeKind.Local).AddTicks(5538),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",
                             Role = "User"
                         });
-                });
-
-            modelBuilder.Entity("OutletStatusPortal.Models.BeforeOutletSetUp", b =>
-                {
-                    b.HasOne("OutletStatusPortal.Models.StockItem", "StockItem")
-                        .WithMany()
-                        .HasForeignKey("StockItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("StockItem");
                 });
 
             modelBuilder.Entity("OutletStatusPortal.Models.DeviceSetupStatus", b =>

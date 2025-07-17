@@ -9,7 +9,7 @@ namespace OutletStatusPortal.Models
         public int Sl { get; set; }
 
        
-        public string OutletCode { get; set; }
+        public string? OutletCode { get; set; }
         public string OutletName { get; set; }
         public string Location { get; set; }
 
@@ -19,7 +19,6 @@ namespace OutletStatusPortal.Models
         [Required]
         [ForeignKey("StockItem")]
         public int StockItemId { get; set; }
-        public StockItem StockItem { get; set; }
 
         // Quantities used
         public int Pos { get; set; }
@@ -28,7 +27,7 @@ namespace OutletStatusPortal.Models
         public int Router { get; set; }
         public int Scanner { get; set; }
         public int Icmo { get; set; }
-
+        public DateTime OperationDate { get; set; } = DateTime.Now;
         public ICollection<DeviceSetupStatus> DeviceStatuses { get; set; }
     }
 
