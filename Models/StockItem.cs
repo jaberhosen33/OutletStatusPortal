@@ -15,7 +15,7 @@ namespace OutletStatusPortal.Models
         [Required]
         public StockTypeEnum StockType { get; set; }
 
-        [Range(0, int.MaxValue)] public int Pos { get; set; }
+        [Range(0, int.MaxValue)] public int Pos { get; set; }   
         [Range(0, int.MaxValue)] public int Om { get; set; }
         [Range(0, int.MaxValue)] public int Server { get; set; }
         [Range(0, int.MaxValue)] public int Router { get; set; }

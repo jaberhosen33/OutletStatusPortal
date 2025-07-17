@@ -8,13 +8,16 @@ namespace OutletStatusPortal.Controllers
 {
   
 
-    public class StockController : Controller
-    {
-        private readonly Outletdbcontext _context;
 
-        public StockController(Outletdbcontext context)
+
+
+    public class StockController : BaseController
+    {
+        //private readonly Outletdbcontext _context;
+
+        public StockController(Outletdbcontext context) : base(context)
         {
-            _context = context;
+            
         }
 
         // View all stock items
@@ -70,7 +73,7 @@ namespace OutletStatusPortal.Controllers
                 Router = model.Router,
                 Scanner = model.Scanner,
                 Icmo = model.Icmo,
-                PerformedBy = "admin" // replace with logged-in user if available
+                PerformedBy = ViewBag.CurrentUserName
             });
 
             await _context.SaveChangesAsync();
@@ -83,12 +86,12 @@ namespace OutletStatusPortal.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new StockItem());
+            return View(new StockItemViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(StockItem model)
+        public async Task<IActionResult> Create(StockItemViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -121,10 +124,54 @@ namespace OutletStatusPortal.Controllers
                 existing.Icmo += model.Icmo;
 
                 _context.StockItems.Update(existing);
+
+                _context.StockTransactions.Add(new StockTransaction
+                {
+                    StockItemId = existing.Id,
+                    OperationType = OperationType.Assign,
+                    
+                    Pos = model.Pos,
+                    Om = model.Om,
+                    Server = model.Server,
+                    Router = model.Router,
+                    Scanner = model.Scanner,
+                    Icmo = model.Icmo,
+                    PerformedBy = ViewBag.CurrentUserName
+                });
+
             }
             else
             {
-                _context.StockItems.Add(model);
+               
+                var stockItem = new StockItem
+                {
+                    VendorName = model.VendorName,
+                    OutletName = model.OutletName,
+                    StockType = model.StockType,
+                    Pos = model.Pos,
+                    Om = model.Om,
+                    Server = model.Server,
+                    Router = model.Router,
+                    Scanner = model.Scanner,
+                    Icmo = model.Icmo
+                };
+
+                _context.StockItems.Add(stockItem);
+                await _context.SaveChangesAsync();
+                _context.StockTransactions.Add(new StockTransaction
+                {
+                    StockItemId = stockItem.Id,
+                    OperationType = OperationType.Assign,
+
+                    Pos = model.Pos,
+                    Om = model.Om,
+                    Server = model.Server,
+                    Router = model.Router,
+                    Scanner = model.Scanner,
+                    Icmo = model.Icmo,
+                    PerformedBy = ViewBag.CurrentUserName
+                });
+                await _context.SaveChangesAsync();
             }
 
             await _context.SaveChangesAsync();

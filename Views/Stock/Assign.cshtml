@@ -26,7 +26,8 @@
         <select asp-for="StockItemId">
             @foreach (var item in stockItems)
             {
-                    <option value="@item.Id">@item.VendorName - @item.StockType</option>
+                <option value="@item.Id">@item.VendorName - @item.StockType - @item.OutletName</option>
+                
             }
         </select>
     </div>
