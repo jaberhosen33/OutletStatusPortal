@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OutletStatusPortal.Models
 {
@@ -6,8 +7,10 @@ namespace OutletStatusPortal.Models
     {
         [Key]
         public int Id { get; set; }
-
-        [Required] public string OutletName { get; set; }
+        [Required]
+        [ForeignKey("BeforeOutletSetUp")]
+        public int Sl { get; set; }
+        public BeforeOutletSetUp? beforeOutletSetUp { get; set; }
         [Required] public string OfficeITSetup { get; set; }
         public string CourierStatus { get; set; }
         public string NetworkVendor { get; set; }

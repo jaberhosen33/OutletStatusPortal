@@ -28,6 +28,7 @@ namespace OutletStatusPortal.Models
         public int Scanner { get; set; }
         public int Icmo { get; set; }
         public DateTime OperationDate { get; set; } = DateTime.Now;
+        public StockItem? StockItem { get; set; }
         public ICollection<DeviceSetupStatus> DeviceStatuses { get; set; }
     }
 

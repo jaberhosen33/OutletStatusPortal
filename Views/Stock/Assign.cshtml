@@ -8,21 +8,21 @@
 
 <form asp-action="Assign" method="post" class="container">
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-2">
             <label asp-for="OutletCode" class="form-label">Outlet Code</label>
             <input asp-for="OutletCode" class="form-control" />
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <label asp-for="OutletName" class="form-label">Outlet Name</label>
             <input asp-for="OutletName" class="form-control" />
+        </div>
+        <div class="col-md-5">
+            <label asp-for="Location" class="form-label">Location</label>
+            <input asp-for="Location" class="form-control" />
         </div>
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-6">
-            <label asp-for="Location" class="form-label">Location</label>
-            <input asp-for="Location" class="form-control" />
-        </div>
         <div class="col-md-6">
             <label asp-for="StockItemId" class="form-label">Stock Item</label>
             <select asp-for="StockItemId" class="form-select">
@@ -32,35 +32,34 @@
                 }
             </select>
         </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label asp-for="Pos" class="form-label">POS</label>
             <input asp-for="Pos" class="form-control" />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label asp-for="Om" class="form-label">OM</label>
             <input asp-for="Om" class="form-control" />
         </div>
-        <div class="col-md-4">
-            <label asp-for="Server" class="form-label">Server</label>
-            <input asp-for="Server" class="form-control" />
-        </div>
     </div>
 
+    
+
     <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label asp-for="Router" class="form-label">Router</label>
             <input asp-for="Router" class="form-control" />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label asp-for="Scanner" class="form-label">Scanner</label>
             <input asp-for="Scanner" class="form-control" />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label asp-for="Icmo" class="form-label">ICMO</label>
             <input asp-for="Icmo" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Server" class="form-label">Server</label>
+            <input asp-for="Server" class="form-control" />
         </div>
     </div>
 

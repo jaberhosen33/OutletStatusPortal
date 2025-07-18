@@ -64,10 +64,6 @@ namespace OutletStatusPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OutletName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PosId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +72,15 @@ namespace OutletStatusPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Sl")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("beforeOutletSetUpSl")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("beforeOutletSetUpSl");
 
                     b.ToTable("AfterOutletSetups");
                 });
@@ -128,6 +132,8 @@ namespace OutletStatusPortal.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Sl");
+
+                    b.HasIndex("StockItemId");
 
                     b.ToTable("BeforeOutletSetUps");
                 });
@@ -295,7 +301,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 17, 16, 55, 51, 980, DateTimeKind.Local).AddTicks(5537),
+                            Date = new DateTime(2025, 7, 18, 20, 21, 25, 873, DateTimeKind.Local).AddTicks(3485),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -304,12 +310,32 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 17, 16, 55, 51, 980, DateTimeKind.Local).AddTicks(5538),
+                            Date = new DateTime(2025, 7, 18, 20, 21, 25, 873, DateTimeKind.Local).AddTicks(3487),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",
                             Role = "User"
                         });
+                });
+
+            modelBuilder.Entity("OutletStatusPortal.Models.AfterOutletSetup", b =>
+                {
+                    b.HasOne("OutletStatusPortal.Models.BeforeOutletSetUp", "beforeOutletSetUp")
+                        .WithMany()
+                        .HasForeignKey("beforeOutletSetUpSl");
+
+                    b.Navigation("beforeOutletSetUp");
+                });
+
+            modelBuilder.Entity("OutletStatusPortal.Models.BeforeOutletSetUp", b =>
+                {
+                    b.HasOne("OutletStatusPortal.Models.StockItem", "StockItem")
+                        .WithMany()
+                        .HasForeignKey("StockItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StockItem");
                 });
 
             modelBuilder.Entity("OutletStatusPortal.Models.DeviceSetupStatus", b =>

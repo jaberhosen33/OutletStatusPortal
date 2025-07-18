@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OutletStatusPortal.Models;
 using System.Linq;
@@ -31,8 +32,8 @@ namespace OutletStatusPortal.Controllers
         public async Task<IActionResult> BeforeSeupView()
         {
             var setups = await _context.BeforeOutletSetUps
-                .Include(b => b.DeviceStatuses)
-                .ToListAsync();
+       .Include(b => b.StockItem) // include the StockItem data
+       .ToListAsync();
 
             return View(setups);
         }
@@ -187,7 +188,45 @@ namespace OutletStatusPortal.Controllers
             return RedirectToAction(nameof(ViewStocks));
         }
 
-      
+        /// create AfteroutletSetup Action 
+        /// 
+        public IActionResult AfterOutletSetupCreate()
+        {
+            var outlets = _context.BeforeOutletSetUps
+        .Select(o => new SelectListItem
+        {
+            Value = o.Sl.ToString(),
+            Text = $"{o.OutletCode} - {o.OutletName}"
+        }).ToList();
+
+            ViewBag.Outlets = outlets;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AfterOutletSetupCreate(AfterOutletSetup model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.AfterOutletSetups.Add(model);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            // Rebuild dropdown if model is invalid
+            ViewBag.Outlets = _context.BeforeOutletSetUps
+                .Select(o => new SelectListItem
+                {
+                    Value = o.Sl.ToString(),
+                    Text = $"{o.OutletCode} - {o.OutletName}"
+                }).ToList();
+
+            return View(model);
+        }
+
+
     }
 
 }
