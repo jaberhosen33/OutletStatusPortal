@@ -113,8 +113,7 @@ namespace OutletStatusPortal.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Sl = table.Column<int>(type: "int", nullable: false),
-                    beforeOutletSetUpSl = table.Column<int>(type: "int", nullable: true),
+                    BeforeOutletSetUpSl = table.Column<int>(type: "int", nullable: false),
                     OfficeITSetup = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourierStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NetworkVendor = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -131,10 +130,11 @@ namespace OutletStatusPortal.Migrations
                 {
                     table.PrimaryKey("PK_AfterOutletSetups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AfterOutletSetups_BeforeOutletSetUps_beforeOutletSetUpSl",
-                        column: x => x.beforeOutletSetUpSl,
+                        name: "FK_AfterOutletSetups_BeforeOutletSetUps_BeforeOutletSetUpSl",
+                        column: x => x.BeforeOutletSetUpSl,
                         principalTable: "BeforeOutletSetUps",
-                        principalColumn: "Sl");
+                        principalColumn: "Sl",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,17 +163,17 @@ namespace OutletStatusPortal.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l53335", new DateTime(2025, 7, 18, 20, 21, 25, 873, DateTimeKind.Local).AddTicks(3485), "Jaber Hosen", "1234", "01700000001", "Admin" });
+                values: new object[] { "l53335", new DateTime(2025, 7, 19, 18, 25, 21, 435, DateTimeKind.Local).AddTicks(6562), "Jaber Hosen", "1234", "01700000001", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l54445", new DateTime(2025, 7, 18, 20, 21, 25, 873, DateTimeKind.Local).AddTicks(3487), "Sadia Akter", "jaber hosen", "01700000002", "User" });
+                values: new object[] { "l54445", new DateTime(2025, 7, 19, 18, 25, 21, 435, DateTimeKind.Local).AddTicks(6565), "Sadia Akter", "jaber hosen", "01700000002", "User" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AfterOutletSetups_beforeOutletSetUpSl",
+                name: "IX_AfterOutletSetups_BeforeOutletSetUpSl",
                 table: "AfterOutletSetups",
-                column: "beforeOutletSetUpSl");
+                column: "BeforeOutletSetUpSl");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BeforeOutletSetUps_StockItemId",

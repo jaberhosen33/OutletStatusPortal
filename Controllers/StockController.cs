@@ -87,7 +87,7 @@ namespace OutletStatusPortal.Controllers
             });
 
             await _context.SaveChangesAsync();
-
+            TempData["success"] = "Insert successfully!";
             return RedirectToAction(nameof(BeforeSeupView));
         }
 
@@ -185,21 +185,43 @@ namespace OutletStatusPortal.Controllers
             }
 
             await _context.SaveChangesAsync();
+            TempData["success"] = "Insert successfully!";
             return RedirectToAction(nameof(ViewStocks));
         }
+
+        //-------After outlet Setup----------------//
+        public IActionResult AfteroutletSetupView()
+        {
+            var list = _context.AfterOutletSetups
+                .Include(a => a.beforeOutletSetUp)
+                .ToList();
+
+            return View(list);
+        }
+
 
         /// create AfteroutletSetup Action 
         /// 
         public IActionResult AfterOutletSetupCreate()
         {
             var outlets = _context.BeforeOutletSetUps
-        .Select(o => new SelectListItem
+            .Select(o => new SelectListItem
         {
             Value = o.Sl.ToString(),
             Text = $"{o.OutletCode} - {o.OutletName}"
         }).ToList();
 
             ViewBag.Outlets = outlets;
+            //dropdown for AssignPerson
+              var userlist = _context.Users
+             .Where(u => u.Role == "User")
+             .Select(u => new SelectListItem
+             {
+                 Value = u.Name,
+                 Text = u.Name
+             }).ToList();
+
+                    ViewBag.UserLists = userlist;
 
             return View();
         }
@@ -212,19 +234,40 @@ namespace OutletStatusPortal.Controllers
             {
                 _context.AfterOutletSetups.Add(model);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("AfteroutletSetupView");
+
+                //foreach (var modelState in ModelState)
+                //{
+                //    var key = modelState.Key;
+                //    var errors = modelState.Value.Errors;
+
+                //    foreach (var error in errors)
+                //    {
+                //        Console.WriteLine($"Error in '{key}': {error.ErrorMessage}");
+                //    }
+                //}
             }
 
+
             // Rebuild dropdown if model is invalid
+            //dropdown for OutletName
             ViewBag.Outlets = _context.BeforeOutletSetUps
                 .Select(o => new SelectListItem
                 {
                     Value = o.Sl.ToString(),
                     Text = $"{o.OutletCode} - {o.OutletName}"
                 }).ToList();
+            //dropdown for AssignPerson
+            var userlist = _context.Users.Select(U => new SelectListItem
+            {
+                Value = U.Name.ToString(),
+                Text = $"{U.Name}"
+            }).ToList(); ;
+            ViewBag.userlists = userlist;
 
             return View(model);
         }
+
 
 
     }

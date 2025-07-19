@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace OutletStatusPortal.Models
 {
@@ -9,8 +11,10 @@ namespace OutletStatusPortal.Models
         public int Id { get; set; }
         [Required]
         [ForeignKey("BeforeOutletSetUp")]
-        public int Sl { get; set; }
-        public BeforeOutletSetUp? beforeOutletSetUp { get; set; }
+        public int BeforeOutletSetUpSl { get; set; }
+        
+        [ValidateNever]
+        public BeforeOutletSetUp beforeOutletSetUp { get; set; }
         [Required] public string OfficeITSetup { get; set; }
         public string CourierStatus { get; set; }
         public string NetworkVendor { get; set; }

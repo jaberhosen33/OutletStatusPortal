@@ -12,7 +12,7 @@ using OutletStatusPortal.Models;
 namespace OutletStatusPortal.Migrations
 {
     [DbContext(typeof(Outletdbcontext))]
-    [Migration("20250718142126_init")]
+    [Migration("20250719122521_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace OutletStatusPortal.Migrations
 
                     b.Property<string>("AssignedPersons")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BeforeOutletSetUpSl")
+                        .HasColumnType("int");
 
                     b.Property<string>("CourierStatus")
                         .IsRequired()
@@ -74,15 +77,9 @@ namespace OutletStatusPortal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sl")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("beforeOutletSetUpSl")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("beforeOutletSetUpSl");
+                    b.HasIndex("BeforeOutletSetUpSl");
 
                     b.ToTable("AfterOutletSetups");
                 });
@@ -303,7 +300,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 18, 20, 21, 25, 873, DateTimeKind.Local).AddTicks(3485),
+                            Date = new DateTime(2025, 7, 19, 18, 25, 21, 435, DateTimeKind.Local).AddTicks(6562),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -312,7 +309,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 18, 20, 21, 25, 873, DateTimeKind.Local).AddTicks(3487),
+                            Date = new DateTime(2025, 7, 19, 18, 25, 21, 435, DateTimeKind.Local).AddTicks(6565),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",
@@ -324,7 +321,9 @@ namespace OutletStatusPortal.Migrations
                 {
                     b.HasOne("OutletStatusPortal.Models.BeforeOutletSetUp", "beforeOutletSetUp")
                         .WithMany()
-                        .HasForeignKey("beforeOutletSetUpSl");
+                        .HasForeignKey("BeforeOutletSetUpSl")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("beforeOutletSetUp");
                 });

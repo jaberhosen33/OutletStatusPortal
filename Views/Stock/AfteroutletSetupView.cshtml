@@ -1,0 +1,48 @@
+﻿@model List<OutletStatusPortal.Models.AfterOutletSetup>
+
+@{
+    ViewData["Title"] = "After Outlet Setup List";
+}
+
+<h2 class="mb-4">After Outlet Setup List</h2>
+
+<a class="btn btn-primary mb-3" asp-action="Create">+ Create New</a>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Outlet</th>
+            <th>Assigned Person</th>
+            <th>Office IT</th>
+            <th>Courier</th>
+            <th>Network</th>
+            <th>Outlet IT</th>
+            <th>Link</th>
+            <th>Operation Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                   @item.beforeOutletSetUp.OutletName
+                  
+                </td>
+                <td>@item.AssignedPersons</td>
+                <td>@item.OfficeITSetup</td>
+                <td>@item.CourierStatus</td>
+                <td>@item.NetworkVendor</td>
+                <td>@item.OutletITSetup</td>
+                <td>@item.LinkStatus</td>
+                <td>@item.OperationDate.ToShortDateString()</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
