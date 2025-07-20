@@ -268,7 +268,50 @@ namespace OutletStatusPortal.Controllers
             return View(model);
         }
 
+        public IActionResult DeviceSetupStatusCreate()
+        {
+            var viewModel = new DeviceSetupStatusFormViewModel
+            {
+                BeforeOutletSetUpList = _context.BeforeOutletSetUps
+                    .Select(b => new SelectListItem
+                    {
+                        Value = b.Sl.ToString(),
+                        Text = b.OutletName // Replace with appropriate property
+                    }).ToList()
+            };
 
+            // Add an initial row
+            viewModel.DeviceStatuses.Add(new DeviceSetupStatus());
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult DeviceSetupStatusCreate(DeviceSetupStatusFormViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var device in model.DeviceStatuses)
+                {
+                    device.BeforeOutletSetUpSl = model.SelectedBeforeOutletSetUpSl;
+                    device.UpdateDate = DateTime.Now;
+                    _context.DeviceSetupStatuses.Add(device);
+                }
+
+                _context.SaveChanges();
+                return RedirectToAction("Index"); // or wherever
+            }
+
+            // Refill dropdown on postback
+            model.BeforeOutletSetUpList = _context.BeforeOutletSetUps
+                    .Select(b => new SelectListItem
+                    {
+                        Value = b.Sl.ToString(),
+                        Text = b.OutletName
+                    }).ToList();
+
+            return View(model);
+        }
 
     }
 

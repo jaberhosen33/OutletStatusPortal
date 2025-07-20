@@ -1,0 +1,76 @@
+﻿@model OutletStatusPortal.Models.DeviceSetupStatusFormViewModel
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2>Add Device Setup Status</h2>
+
+<form asp-action="DeviceSetupStatusCreate" method="post">
+    <div class="form-group">
+        <label>Before Outlet Setup</label>
+        <select asp-for="SelectedBeforeOutletSetUpSl" asp-items="Model.BeforeOutletSetUpList" class="form-control"></select>
+    </div>
+
+    <table class="table" id="deviceTable">
+        <thead>
+            <tr>
+                <th>Device Type</th>
+                <th>Status</th>
+                <th>Work By</th>
+                <th>Update Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.DeviceStatuses.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="@Model.DeviceStatuses[i].DeviceType" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model.DeviceStatuses[i].WorkStatus" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model.DeviceStatuses[i].WorkBy" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model.DeviceStatuses[i].UpdateDate" class="form-control" type="date" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger removeRow">Remove</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="button" id="addRow" class="btn btn-info">Add More</button>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let rowIdx = @Model.DeviceStatuses.Count;
+
+            $('#addRow').click(function () {
+                let row = `
+                <tr>
+                    <td><input name="DeviceStatuses[${rowIdx}].DeviceType" class="form-control" /></td>
+                    <td><input name="DeviceStatuses[${rowIdx}].WorkStatus" class="form-control" /></td>
+                    <td><input name="DeviceStatuses[${rowIdx}].WorkBy" class="form-control" /></td>
+                    <td><input name="DeviceStatuses[${rowIdx}].UpdateDate" type="date" class="form-control" /></td>
+                    <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
+                </tr>`;
+                $('#deviceTable tbody').append(row);
+                rowIdx++;
+            });
+
+            $(document).on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+            });
+        });
+    </script>
+}
+

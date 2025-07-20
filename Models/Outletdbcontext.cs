@@ -31,8 +31,8 @@ namespace OutletStatusPortal.Models
             // Cascade delete DeviceStatus if BeforeOutletSetUp is deleted
             modelBuilder.Entity<BeforeOutletSetUp>()
                 .HasMany(b => b.DeviceStatuses)
-                .WithOne(d => d.Outlet)
-                .HasForeignKey(d => d.Sl)
+                .WithOne(d => d.beforeOutletSetUp)
+                .HasForeignKey(d => d.BeforeOutletSetUpSl)
                 .OnDelete(DeleteBehavior.Cascade);
             // Seed 2 users
             modelBuilder.Entity<Users>().HasData(

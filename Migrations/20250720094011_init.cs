@@ -143,7 +143,7 @@ namespace OutletStatusPortal.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Sl = table.Column<int>(type: "int", nullable: false),
+                    BeforeOutletSetUpSl = table.Column<int>(type: "int", nullable: false),
                     DeviceType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WorkStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WorkBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -153,8 +153,8 @@ namespace OutletStatusPortal.Migrations
                 {
                     table.PrimaryKey("PK_DeviceSetupStatuses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeviceSetupStatuses_BeforeOutletSetUps_Sl",
-                        column: x => x.Sl,
+                        name: "FK_DeviceSetupStatuses_BeforeOutletSetUps_BeforeOutletSetUpSl",
+                        column: x => x.BeforeOutletSetUpSl,
                         principalTable: "BeforeOutletSetUps",
                         principalColumn: "Sl",
                         onDelete: ReferentialAction.Cascade);
@@ -163,12 +163,12 @@ namespace OutletStatusPortal.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l53335", new DateTime(2025, 7, 19, 18, 25, 21, 435, DateTimeKind.Local).AddTicks(6562), "Jaber Hosen", "1234", "01700000001", "Admin" });
+                values: new object[] { "l53335", new DateTime(2025, 7, 20, 15, 40, 10, 829, DateTimeKind.Local).AddTicks(2445), "Jaber Hosen", "1234", "01700000001", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l54445", new DateTime(2025, 7, 19, 18, 25, 21, 435, DateTimeKind.Local).AddTicks(6565), "Sadia Akter", "jaber hosen", "01700000002", "User" });
+                values: new object[] { "l54445", new DateTime(2025, 7, 20, 15, 40, 10, 829, DateTimeKind.Local).AddTicks(2447), "Sadia Akter", "jaber hosen", "01700000002", "User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AfterOutletSetups_BeforeOutletSetUpSl",
@@ -181,9 +181,9 @@ namespace OutletStatusPortal.Migrations
                 column: "StockItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceSetupStatuses_Sl",
+                name: "IX_DeviceSetupStatuses_BeforeOutletSetUpSl",
                 table: "DeviceSetupStatuses",
-                column: "Sl");
+                column: "BeforeOutletSetUpSl");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockTransactions_StockItemId",
