@@ -268,28 +268,44 @@ namespace OutletStatusPortal.Controllers
             return View(model);
         }
 
+        private List<SelectListItem> GetBeforeOutletSetUpList()
+        {
+            return _context.BeforeOutletSetUps
+                .Select(b => new SelectListItem
+                {
+                    Value = b.Sl.ToString(),
+                    Text = b.OutletName
+                }).ToList();
+        }
+
         public IActionResult DeviceSetupStatusCreate()
         {
             var viewModel = new DeviceSetupStatusFormViewModel
             {
-                BeforeOutletSetUpList = _context.BeforeOutletSetUps
-                    .Select(b => new SelectListItem
-                    {
-                        Value = b.Sl.ToString(),
-                        Text = b.OutletName // Replace with appropriate property
-                    }).ToList()
+                BeforeOutletSetUpList = GetBeforeOutletSetUpList()
             };
-
-            // Add an initial row
             viewModel.DeviceStatuses.Add(new DeviceSetupStatus());
-
             return View(viewModel);
         }
 
         [HttpPost]
         public IActionResult DeviceSetupStatusCreate(DeviceSetupStatusFormViewModel model)
         {
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var modelState in ModelState)
+                {
+                    var key = modelState.Key;
+                    var errors = modelState.Value.Errors;
+
+                    foreach (var error in errors)
+                    {
+                        Console.WriteLine($"Error in '{key}': {error.ErrorMessage}");
+                    }
+                }
+            }
+          else
             {
                 foreach (var device in model.DeviceStatuses)
                 {
@@ -299,17 +315,11 @@ namespace OutletStatusPortal.Controllers
                 }
 
                 _context.SaveChanges();
-                return RedirectToAction("Index"); // or wherever
+                return RedirectToAction("Index");
             }
 
-            // Refill dropdown on postback
-            model.BeforeOutletSetUpList = _context.BeforeOutletSetUps
-                    .Select(b => new SelectListItem
-                    {
-                        Value = b.Sl.ToString(),
-                        Text = b.OutletName
-                    }).ToList();
-
+            // Refill dropdown
+            model.BeforeOutletSetUpList = GetBeforeOutletSetUpList();
             return View(model);
         }
 
