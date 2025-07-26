@@ -9,7 +9,7 @@
 
     <form asp-action="DeviceSetupStatusCreate" method="post">
         <div class="form-group">
-            <label>Before Outlet Setup</label>
+            <label> Outlet Name </label>
             <select asp-for="SelectedBeforeOutletSetUpSl" asp-items="Model.BeforeOutletSetUpList" class="form-control"></select>
         </div>
 
@@ -18,8 +18,7 @@
                 <tr>
                     <th>Device Type</th>
                     <th>Status</th>
-                    <th>Work By</th>
-                    <th>Update Date</th>
+                    
                     <th></th>
                 </tr>
             </thead>
@@ -33,12 +32,12 @@
                         <td>
                             <input asp-for="@Model.DeviceStatuses[i].WorkStatus" class="form-control" />
                         </td>
-                        <td>
+                       @*  <td>
                             <input asp-for="@Model.DeviceStatuses[i].WorkBy" class="form-control" />
                         </td>
                         <td>
                             <input asp-for="@Model.DeviceStatuses[i].UpdateDate" class="form-control" type="date" />
-                        </td>
+                        </td> *@
                         <td>
                             <button type="button" class="btn btn-danger removeRow">Remove</button>
                         </td>
@@ -62,8 +61,7 @@
                 <tr>
                     <td><input name="DeviceStatuses[${rowIdx}].DeviceType" class="form-control" /></td>
                     <td><input name="DeviceStatuses[${rowIdx}].WorkStatus" class="form-control" /></td>
-                    <td><input name="DeviceStatuses[${rowIdx}].WorkBy" class="form-control" /></td>
-                    <td><input name="DeviceStatuses[${rowIdx}].UpdateDate" type="date" class="form-control" /></td>
+             
                     <td><button type="button" class="btn btn-danger removeRow">Remove</button></td>
                 </tr>`;
                 $('#deviceTable tbody').append(row);

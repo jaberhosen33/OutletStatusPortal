@@ -54,7 +54,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow">
+        <nav class="navbar navbar-expand-sm navbar-light border-bottom box-shadow bg-dark">
             <div class="container-fluid">
                 <img style="height:40px; width:40px;" src="~/newfolder/whatsapp image 2025-06-19 at 2.29.21 pm.jpeg" />
                 <a class="navbar-brand text-danger fw-bold ms-3" asp-area="" asp-controller="Home" asp-action="Index">OutletStatus</a>
@@ -63,12 +63,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        
                     </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity?.IsAuthenticated ?? false)
@@ -96,6 +91,7 @@
         @if (User.IsInRole("Admin"))
         {
             <!-- Sidebar -->
+            <!-- Sidebar -->
             <nav id="sidebar">
                 <div class="text-center py-3 border-bottom border-secondary fw-bold">
                     <i class="bi bi-speedometer2 me-2"></i> Admin Panel
@@ -106,70 +102,79 @@
                             <i class="bi bi-people-fill me-2"></i> User List
                         </a>
                     </li>
+
+                    <!-- Stock -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu" role="button" aria-expanded="false">
+                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu1" role="button" aria-expanded="false">
                             <i class="bi bi-box-seam me-2"></i> Stock
                         </a>
-                        <div class="collapse" id="stockMenu">
+                        <div class="collapse" id="stockMenu1">
                             <ul class="nav flex-column ms-3">
                                 <li class="nav-item">
                                     <a class="nav-link text-white submenu-link" href="/Stock/Create">🛠️ Stock Create</a>
                                 </li>
-                               
                                 <li class="nav-item">
                                     <a class="nav-link text-white submenu-link" href="/Stock/ViewStocks">📦 View Stock</a>
                                 </li>
-                               
                             </ul>
                         </div>
                     </li>
+
+                    <!-- Outlet -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu" role="button" aria-expanded="false">
-                            <i class="bi bi-box-seam me-2"></i> Outlet
+                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu2" role="button" aria-expanded="false">
+                            <i class="bi bi-shop me-2"></i> Outlet
                         </a>
-                        <div class="collapse" id="stockMenu">
+                        <div class="collapse" id="stockMenu2">
                             <ul class="nav flex-column ms-3">
-                             
                                 <li class="nav-item">
                                     <a class="nav-link text-white submenu-link" href="/Stock/Assign">🏪 Add Outlet</a>
                                 </li>
-                                
                                 <li class="nav-item">
                                     <a class="nav-link text-white submenu-link" href="/Stock/BeforeSeupView">🕒 Before Setup View</a>
                                 </li>
-                               @*  <li class="nav-item">
-                                    <a class="nav-link text-white submenu-link" href="/Stock/AfterOutletSetupCreate">✅ After Setup Create</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white submenu-link" href="/Stock/DeviceSetupStatusCreate">⚙️ Device Setup Status</a>
-                                </li> *@
                             </ul>
                         </div>
                     </li>
 
+                    <!-- Setup -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu" role="button" aria-expanded="false">
-                            <i class="bi bi-box-seam me-2"></i> SETUP
+                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu3" role="button" aria-expanded="false">
+                            <i class="bi bi-gear me-2"></i> Setup
                         </a>
-                        <div class="collapse" id="stockMenu">
+                        <div class="collapse" id="stockMenu3">
                             <ul class="nav flex-column ms-3">
-
-                             
-                                 <li class="nav-item">
-                            <a class="nav-link text-white submenu-link" href="/Stock/AfterOutletSetupView">✅ After Setup View</a>
-                            </li>
-
+                                <li class="nav-item">
+                                    <a class="nav-link text-white submenu-link" href="/Stock/AfterOutletSetupView">✅ After Setup View</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white submenu-link" href="/Stock/AfterOutletSetupCreate">✅ After Setup Create</a>
                                 </li>
-                            <li class="nav-item">
-                            <a class="nav-link text-white submenu-link" href="/Stock/DeviceSetupStatusCreate">⚙️ Device Setup Status</a>
-                            </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- Setup -->
+                    <li class="nav-item">
+                        <a class="nav-link text-white" data-bs-toggle="collapse" href="#stockMenu4" role="button" aria-expanded="false">
+                            <i class="bi bi-gear me-2"></i> Device Setup
+                        </a>
+                        <div class="collapse" id="stockMenu4">
+                            <ul class="nav flex-column ms-3">
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link text-white submenu-link" href="/Stock/DeviceSetupStatusCreate">⚙️ Setup Device </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white submenu-link" href="/Stock/DeviceSetupStatusView">⚙️ View Setup Status</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
                 </ul>
             </nav>
+
         }
 
         <div class="flex-grow-1">

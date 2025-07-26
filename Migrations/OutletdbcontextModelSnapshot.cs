@@ -298,7 +298,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 22, 8, 15, 22, 708, DateTimeKind.Local).AddTicks(1124),
+                            Date = new DateTime(2025, 7, 23, 3, 18, 36, 187, DateTimeKind.Local).AddTicks(9708),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -307,7 +307,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 22, 8, 15, 22, 708, DateTimeKind.Local).AddTicks(1127),
+                            Date = new DateTime(2025, 7, 23, 3, 18, 36, 187, DateTimeKind.Local).AddTicks(9712),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",

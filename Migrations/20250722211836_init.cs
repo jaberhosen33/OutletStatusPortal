@@ -163,12 +163,12 @@ namespace OutletStatusPortal.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l53335", new DateTime(2025, 7, 22, 8, 15, 22, 708, DateTimeKind.Local).AddTicks(1124), "Jaber Hosen", "1234", "01700000001", "Admin" });
+                values: new object[] { "l53335", new DateTime(2025, 7, 23, 3, 18, 36, 187, DateTimeKind.Local).AddTicks(9708), "Jaber Hosen", "1234", "01700000001", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "StafId", "Date", "Name", "PassWord", "Phone", "Role" },
-                values: new object[] { "l54445", new DateTime(2025, 7, 22, 8, 15, 22, 708, DateTimeKind.Local).AddTicks(1127), "Sadia Akter", "jaber hosen", "01700000002", "User" });
+                values: new object[] { "l54445", new DateTime(2025, 7, 23, 3, 18, 36, 187, DateTimeKind.Local).AddTicks(9712), "Sadia Akter", "jaber hosen", "01700000002", "User" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AfterOutletSetups_BeforeOutletSetUpSl",

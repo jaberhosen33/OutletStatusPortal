@@ -22,7 +22,8 @@ namespace OutletStatusPortal.Controllers
         }
 
         // View all stock items
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
+
         public async Task<IActionResult> ViewStocks()
         {
             var stockItems = await _context.StockItems.ToListAsync();
@@ -310,6 +311,7 @@ namespace OutletStatusPortal.Controllers
                 foreach (var device in model.DeviceStatuses)
                 {
                     device.BeforeOutletSetUpSl = model.SelectedBeforeOutletSetUpSl;
+                    device.WorkBy = ViewBag.CurrentUserName;
                     device.UpdateDate = DateTime.Now;
                     _context.DeviceSetupStatuses.Add(device);
                 }
