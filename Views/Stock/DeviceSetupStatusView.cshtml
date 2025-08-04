@@ -1,0 +1,125 @@
+﻿@model List<OutletStatusPortal.Models.DeviceSetupStatusGroupViewModel>
+
+@{
+    ViewBag.Title = "Device Setup Status by Outlet";
+}
+
+<h2 class="mb-4">Outlet Device Setup Status</h2>
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Outlet Name</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var outlet = Model[i].Outlet;
+            var devices = Model[i].Devices;
+            <tr>
+                <td>@outlet.OutletName</td>
+                <td>@outlet.Location</td>
+                <td>
+                    <button class="btn btn-sm btn-info toggle-details" data-index="@i">Details</button>
+                
+                    <a class="btn btn-sm btn-warning" asp-action="EditAllDevices" asp-route-outletSl="@outlet.Sl">Edit All Devices</a>
+            
+
+                    <button class="btn btn-sm btn-danger delete-all-devices" data-outlet="@outlet.Sl">Delete All Devices</button>
+                </td>
+            </tr>
+            <tr class="details-row" id="details-@i" style="display:none;">
+                <td colspan="3">
+                    <table class="table table-sm table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th>Device Type</th>
+                                <th>Work Status</th>
+                                <th>Work By</th>
+                                <th>Update Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var device in devices)
+                            {
+                                <tr id="device-row-@device.Id">
+                                    <td>@device.DeviceType</td>
+                                    <td>@device.WorkStatus</td>
+                                    <td>@device.WorkBy</td>
+                                    <td>@device.UpdateDate.ToShortDateString()</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger delete-device" data-id="@device.Id">Delete</button>
+                                        <a class="btn btn-sm btn-primary" asp-action="EditSingleDevice" asp-route-id="@device.Id">Edit</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            $('.toggle-details').click(function () {
+                var index = $(this).data('index');
+                $('#details-' + index).slideToggle();
+            });
+
+            $('.delete-device').click(function () {
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to delete this device?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("DeleteDevice")', { id: id }, function (response) {
+                            if (response.success) {
+                                $('#device-row-' + id).fadeOut();
+                            } else {
+                                Swal.fire('Error', response.message, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('.delete-all-devices').click(function () {
+                var outletSl = $(this).data('outlet');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You want to delete all devices for this outlet?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete all!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("DeleteAllDevices")', { outletSl: outletSl }, function (response) {
+                            if (response.success) {
+                                location.reload(); // Refresh entire table
+                            } else {
+                                Swal.fire('Error', response.message, 'error');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}

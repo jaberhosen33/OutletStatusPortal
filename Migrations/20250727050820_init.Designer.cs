@@ -12,7 +12,7 @@ using OutletStatusPortal.Models;
 namespace OutletStatusPortal.Migrations
 {
     [DbContext(typeof(Outletdbcontext))]
-    [Migration("20250722211836_init")]
+    [Migration("20250727050820_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,7 +300,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l53335",
-                            Date = new DateTime(2025, 7, 23, 3, 18, 36, 187, DateTimeKind.Local).AddTicks(9708),
+                            Date = new DateTime(2025, 7, 27, 11, 8, 19, 883, DateTimeKind.Local).AddTicks(804),
                             Name = "Jaber Hosen",
                             PassWord = "1234",
                             Phone = "01700000001",
@@ -309,7 +309,7 @@ namespace OutletStatusPortal.Migrations
                         new
                         {
                             StafId = "l54445",
-                            Date = new DateTime(2025, 7, 23, 3, 18, 36, 187, DateTimeKind.Local).AddTicks(9712),
+                            Date = new DateTime(2025, 7, 27, 11, 8, 19, 883, DateTimeKind.Local).AddTicks(807),
                             Name = "Sadia Akter",
                             PassWord = "jaber hosen",
                             Phone = "01700000002",

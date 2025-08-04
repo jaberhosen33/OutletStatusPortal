@@ -400,12 +400,129 @@ namespace OutletStatusPortal.Controllers
                 }
 
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("DeviceSetupStatusView");
             }
 
             // Refill dropdown
             model.BeforeOutletSetUpList = GetBeforeOutletSetUpList();
             return View(model);
+        }
+
+
+        public IActionResult DeviceSetupStatusView()
+        {
+            var groupedData = _context.DeviceSetupStatuses
+         .Include(d => d.beforeOutletSetUp)
+         .ToList()
+         .GroupBy(d => d.BeforeOutletSetUpSl)
+         .Select(g => new DeviceSetupStatusGroupViewModel
+         {
+             Outlet = g.First().beforeOutletSetUp,
+             Devices = g.ToList()
+         })
+         .ToList();
+
+            return View(groupedData);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteDevice(int id)
+        {
+            var device = _context.DeviceSetupStatuses.Find(id);
+            if (device == null)
+            {
+                return Json(new { success = false, message = "Device not found." });
+            }
+
+            _context.DeviceSetupStatuses.Remove(device);
+            _context.SaveChanges();
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAllDevices(int outletSl)
+        {
+            var devices = _context.DeviceSetupStatuses.Where(d => d.BeforeOutletSetUpSl == outletSl).ToList();
+
+            if (!devices.Any())
+            {
+                return Json(new { success = false, message = "No devices found for this outlet." });
+            }
+
+            _context.DeviceSetupStatuses.RemoveRange(devices);
+            _context.SaveChanges();
+
+            return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public IActionResult EditSingleDevice(int id)
+        {
+            var device = _context.DeviceSetupStatuses
+                .Include(d => d.beforeOutletSetUp)
+                .FirstOrDefault(d => d.Id == id);
+
+            if (device == null)
+                return NotFound();
+
+            return View(device);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditSingleDevice(DeviceSetupStatus model)
+        {
+            if (ModelState.IsValid)
+            {
+                var existing = _context.DeviceSetupStatuses.FirstOrDefault(d => d.Id == model.Id);
+                if (existing == null)
+                    return NotFound();
+
+                existing.WorkStatus = model.WorkStatus;
+                existing.WorkBy = model.WorkBy;
+                existing.UpdateDate = DateTime.Now;
+
+                _context.SaveChanges();
+                TempData["success"] = "Device updated successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditAllDevices(int outletSl)
+        {
+            var devices = _context.DeviceSetupStatuses
+                .Include(d => d.beforeOutletSetUp)
+                .Where(d => d.BeforeOutletSetUpSl == outletSl)
+                .ToList();
+
+            if (!devices.Any())
+                return NotFound();
+
+            return View(devices);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditAllDevices(List<DeviceSetupStatus> devices)
+        {
+            foreach (var updatedDevice in devices)
+            {
+                var existingDevice = _context.DeviceSetupStatuses.FirstOrDefault(d => d.Id == updatedDevice.Id);
+                if (existingDevice != null)
+                {
+                    existingDevice.WorkStatus = updatedDevice.WorkStatus;
+                    existingDevice.WorkBy = updatedDevice.WorkBy;
+                    existingDevice.UpdateDate = DateTime.Now;
+                }
+            }
+
+            _context.SaveChanges();
+            TempData["success"] = "All Devices updated successfully!";
+            return RedirectToAction(nameof(Index));
         }
 
     }

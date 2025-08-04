@@ -1,0 +1,36 @@
+﻿@model OutletStatusPortal.Models.DeviceSetupStatus
+
+@{
+    ViewBag.Title = "Edit Device Setup Status";
+}
+
+<h2>Edit Device - @Model.DeviceType</h2>
+
+<form asp-action="EditSingleDevice" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="DeviceType" class="form-label">Device Type</label>
+        <input asp-for="DeviceType" class="form-control" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="WorkStatus" class="form-label">Work Status</label>
+        <input asp-for="WorkStatus" class="form-control" />
+        <span asp-validation-for="WorkStatus" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="WorkBy" class="form-label">Work By</label>
+        <input asp-for="WorkBy" class="form-control" />
+        <span asp-validation-for="WorkBy" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
