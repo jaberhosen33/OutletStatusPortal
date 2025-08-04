@@ -22,7 +22,8 @@ namespace OutletStatusPortal.Controllers
         }
 
         // View all stock items
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
+
         public async Task<IActionResult> ViewStocks()
         {
             var stockItems = await _context.StockItems.ToListAsync();
@@ -190,6 +191,7 @@ namespace OutletStatusPortal.Controllers
         }
 
         //-------After outlet Setup----------------//
+        [Authorize(Roles = "Admin")]
         public IActionResult AfteroutletSetupView()
         {
             var list = _context.AfterOutletSetups
@@ -202,6 +204,7 @@ namespace OutletStatusPortal.Controllers
 
         /// create AfteroutletSetup Action 
         /// 
+        [Authorize(Roles = "Admin")]
         public IActionResult AfterOutletSetupCreate()
         {
             var outlets = _context.BeforeOutletSetUps
@@ -225,7 +228,7 @@ namespace OutletStatusPortal.Controllers
 
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AfterOutletSetupCreate(AfterOutletSetup model)
@@ -268,6 +271,87 @@ namespace OutletStatusPortal.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult AfterOutletSetupEdit(int id)
+        {
+            var afterOutletSetup = _context.AfterOutletSetups.Find(id);
+            if (afterOutletSetup == null)
+            {
+                return NotFound();
+            }
+
+            // Populate dropdowns again
+            ViewBag.Outlets = _context.BeforeOutletSetUps
+                .Select(o => new SelectListItem
+                {
+                    Value = o.Sl.ToString(),
+                    Text = $"{o.OutletCode} - {o.OutletName}"
+                }).ToList();
+
+            ViewBag.UserLists = _context.Users
+                .Where(u => u.Role == "User")
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Name,
+                    Text = u.Name
+                }).ToList();
+
+            return View(afterOutletSetup);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AfterOutletSetupEdit(int id, AfterOutletSetup model)
+        {
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AfteroutletSetupView");
+            }
+
+            // Repopulate dropdowns if validation fails
+            ViewBag.Outlets = _context.BeforeOutletSetUps
+                .Select(o => new SelectListItem
+                {
+                    Value = o.Sl.ToString(),
+                    Text = $"{o.OutletCode} - {o.OutletName}"
+                }).ToList();
+
+            ViewBag.UserLists = _context.Users
+                .Where(u => u.Role == "User")
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Name,
+                    Text = u.Name
+                }).ToList();
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteAjax(int id)
+        {
+            var afterOutletSetup = await _context.AfterOutletSetups.FindAsync(id);
+            if (afterOutletSetup == null)
+            {
+                return Json(new { success = false, message = "Record not found." });
+            }
+
+            _context.AfterOutletSetups.Remove(afterOutletSetup);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = "Deleted successfully." });
+        }
+
+
         private List<SelectListItem> GetBeforeOutletSetUpList()
         {
             return _context.BeforeOutletSetUps
@@ -277,7 +361,7 @@ namespace OutletStatusPortal.Controllers
                     Text = b.OutletName
                 }).ToList();
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult DeviceSetupStatusCreate()
         {
             var viewModel = new DeviceSetupStatusFormViewModel
@@ -310,17 +394,135 @@ namespace OutletStatusPortal.Controllers
                 foreach (var device in model.DeviceStatuses)
                 {
                     device.BeforeOutletSetUpSl = model.SelectedBeforeOutletSetUpSl;
+                    device.WorkBy = ViewBag.CurrentUserName;
                     device.UpdateDate = DateTime.Now;
                     _context.DeviceSetupStatuses.Add(device);
                 }
 
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("DeviceSetupStatusView");
             }
 
             // Refill dropdown
             model.BeforeOutletSetUpList = GetBeforeOutletSetUpList();
             return View(model);
+        }
+
+
+        public IActionResult DeviceSetupStatusView()
+        {
+            var groupedData = _context.DeviceSetupStatuses
+         .Include(d => d.beforeOutletSetUp)
+         .ToList()
+         .GroupBy(d => d.BeforeOutletSetUpSl)
+         .Select(g => new DeviceSetupStatusGroupViewModel
+         {
+             Outlet = g.First().beforeOutletSetUp,
+             Devices = g.ToList()
+         })
+         .ToList();
+
+            return View(groupedData);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteDevice(int id)
+        {
+            var device = _context.DeviceSetupStatuses.Find(id);
+            if (device == null)
+            {
+                return Json(new { success = false, message = "Device not found." });
+            }
+
+            _context.DeviceSetupStatuses.Remove(device);
+            _context.SaveChanges();
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAllDevices(int outletSl)
+        {
+            var devices = _context.DeviceSetupStatuses.Where(d => d.BeforeOutletSetUpSl == outletSl).ToList();
+
+            if (!devices.Any())
+            {
+                return Json(new { success = false, message = "No devices found for this outlet." });
+            }
+
+            _context.DeviceSetupStatuses.RemoveRange(devices);
+            _context.SaveChanges();
+
+            return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public IActionResult EditSingleDevice(int id)
+        {
+            var device = _context.DeviceSetupStatuses
+                .Include(d => d.beforeOutletSetUp)
+                .FirstOrDefault(d => d.Id == id);
+
+            if (device == null)
+                return NotFound();
+
+            return View(device);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditSingleDevice(DeviceSetupStatus model)
+        {
+            if (ModelState.IsValid)
+            {
+                var existing = _context.DeviceSetupStatuses.FirstOrDefault(d => d.Id == model.Id);
+                if (existing == null)
+                    return NotFound();
+
+                existing.WorkStatus = model.WorkStatus;
+                existing.WorkBy = model.WorkBy;
+                existing.UpdateDate = DateTime.Now;
+
+                _context.SaveChanges();
+                TempData["success"] = "Device updated successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult EditAllDevices(int outletSl)
+        {
+            var devices = _context.DeviceSetupStatuses
+                .Include(d => d.beforeOutletSetUp)
+                .Where(d => d.BeforeOutletSetUpSl == outletSl)
+                .ToList();
+
+            if (!devices.Any())
+                return NotFound();
+
+            return View(devices);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditAllDevices(List<DeviceSetupStatus> devices)
+        {
+            foreach (var updatedDevice in devices)
+            {
+                var existingDevice = _context.DeviceSetupStatuses.FirstOrDefault(d => d.Id == updatedDevice.Id);
+                if (existingDevice != null)
+                {
+                    existingDevice.WorkStatus = updatedDevice.WorkStatus;
+                    existingDevice.WorkBy = updatedDevice.WorkBy;
+                    existingDevice.UpdateDate = DateTime.Now;
+                }
+            }
+
+            _context.SaveChanges();
+            TempData["success"] = "All Devices updated successfully!";
+            return RedirectToAction(nameof(Index));
         }
 
     }

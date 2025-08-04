@@ -62,7 +62,7 @@ namespace OutletStatusPortal.Controllers
                 var principal1 = new ClaimsPrincipal(identity1);
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal1);
-                return RedirectToAction("Register", "Account");
+                return RedirectToAction("ViewStocks", "Stock");
             }
             var claims = new List<Claim>
         {

@@ -1,0 +1,43 @@
+﻿@model List<OutletStatusPortal.Models.DeviceSetupStatus>
+
+@{
+    ViewBag.Title = "Edit All Devices";
+}
+
+<h2>Edit All Devices for Outlet: @Model.First().beforeOutletSetUp.OutletName</h2>
+
+<form asp-action="EditAllDevices" method="post">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Device Type</th>
+                <th>Work Status</th>
+                <th>Work By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model[i].DeviceType
+                        <input type="hidden" asp-for="@Model[i].Id" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].WorkStatus" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].WorkBy" class="form-control" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Save All</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
