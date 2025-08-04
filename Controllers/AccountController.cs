@@ -102,6 +102,86 @@ namespace OutletStatusPortal.Controllers
             ViewData["adminount"] = countadmin;
             return View();
         }
+
+
+        //create 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new UserFormViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(UserFormViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new Users
+                {
+                    StafId = model.StafId,
+                    Name = model.Name,
+                    PassWord = model.PassWord,
+                    Phone = model.Phone,
+                    Role = model.Role,
+                    Date = DateTime.Now
+                };
+
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                TempData["success"] = "User Created Successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+        //edit
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.StafId == id);
+            if (user == null)
+                return NotFound();
+
+            var viewModel = new UserFormViewModel
+            {
+                StafId = user.StafId,
+                Name = user.Name,
+                PassWord = user.PassWord,
+                ConfirmPassword = user.PassWord, // Pre-fill Confirm Password
+                Phone = user.Phone,
+                Role = user.Role
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(UserFormViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser = _context.Users.FirstOrDefault(u => u.StafId == model.StafId);
+                if (existingUser == null)
+                    return NotFound();
+
+                existingUser.Name = model.Name;
+                existingUser.PassWord = model.PassWord;
+                existingUser.Phone = model.Phone;
+                existingUser.Role = model.Role;
+
+                _context.Users.Update(existingUser);
+                _context.SaveChanges();
+                TempData["success"] = "User Updated Successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
+
     }
 
 }
